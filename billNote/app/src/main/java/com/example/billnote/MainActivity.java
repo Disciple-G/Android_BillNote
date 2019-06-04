@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -43,7 +46,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBillActivity(new SingleBill());
+                showBillActivity(new SingleBill(), true);
             }
         });
         Button button_lastMonth = (Button)findViewById(R.id.bt_lastMonth);
@@ -89,7 +92,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id) {
-        showBillActivity(bills.get(listIndexMap[position]));
+        showBillActivity(bills.get(listIndexMap[position]), false);
         bills.remove(listIndexMap[position]);
     }
 
@@ -110,8 +113,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             if (monthStr.substring(0, 4).equals(tempDateStr.substring(24, 28)) &&
                     monthStr.substring(5, 8).equals(tempDateStr.substring(4, 7)))
             {
-                str = bills.get(i).getDate().toString().substring(8, 19);
-                str = "    " + str + "                                                    " + String.valueOf(bills.get(i).getMoney())+ " 元";
+                str = "Day" + bills.get(i).getDate().toString().substring(8, 16);
+                str = "    " + str + "                                                 ";
+                NumberFormat format = new DecimalFormat("0.00");
+                str =
+                str = str + format.format(bills.get(i).getMoney()) + "元";
                 listData.add(str);
                 listIndexMap[listData.size()-1] = i;
             }
@@ -124,9 +130,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
     //切换到bill的Activity
-    private void showBillActivity(SingleBill bill) {
+    private void showBillActivity(SingleBill bill, boolean isEditing) {
         Intent intent = new Intent(MainActivity.this, BillActicity.class);
         intent.putExtra("bill", bill);
+        intent.putExtra("isEditing", isEditing);
         startActivityForResult(intent, 0);
     }
 
@@ -135,13 +142,16 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         SingleBill bill = (SingleBill) data.getSerializableExtra("bill");
-        int i=0;
-        Date date = bill.getDate();
-        while (i < bills.size() && date.compareTo(bills.get(i).getDate()) < 0)
+        if (bill != null)
         {
-            ++i;
+            int i=0;
+            Date date = bill.getDate();
+            while (i < bills.size() && date.compareTo(bills.get(i).getDate()) < 0)
+            {
+                ++i;
+            }
+            bills.add(i, bill);
         }
-        bills.add(i, bill);
         fillListWithData();
     }
 }

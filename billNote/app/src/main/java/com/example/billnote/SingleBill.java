@@ -1,4 +1,6 @@
 package com.example.billnote;
+import android.location.LocationManager;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import  java.util.Date;
@@ -27,9 +29,6 @@ public class SingleBill implements Serializable {
 
     public String getLocation() { return locationStr; }
     public void setLocation(String newLocationStr) { locationStr = newLocationStr; }
-    public void setCurrentLocation() {
-        locationStr = "here";
-    }
 
     public float getMoney() {
         return money;
