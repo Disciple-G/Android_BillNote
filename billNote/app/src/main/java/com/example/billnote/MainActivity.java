@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +17,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.ArrayList;
+
+/*
+ *  图标
+ *      报表
+ *      左右箭头
+ *      加号
+ */
+
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private LinkedList<SingleBill> bills;//全部bill的列表
@@ -42,14 +51,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         //填list数据
         fillListWithData();
         //设置各个按钮的点击函数
-        Button button_add = (Button)findViewById(R.id.bt_add);
+        ImageButton button_add = (ImageButton)findViewById(R.id.bt_add);
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showBillActivity(new SingleBill(), true);
             }
         });
-        Button button_lastMonth = (Button)findViewById(R.id.bt_lastMonth);
+        ImageButton button_lastMonth = (ImageButton)findViewById(R.id.bt_lastMonth);
         button_lastMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +69,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 fillListWithData();
             }
         });
-        Button button_nextMonth = (Button)findViewById(R.id.bt_nextMonth);
+        ImageButton button_nextMonth = (ImageButton)findViewById(R.id.bt_nextMonth);
         button_nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +88,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         setContentView(R.layout.activity_main);
         initDIY();
 
-        Button button_showReport = (Button)findViewById(R.id.bt_showReport);
+        ImageButton button_showReport = (ImageButton) findViewById(R.id.bt_showReport);
         button_showReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +109,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private void fillListWithData() {
         //填Month字符串
         String monthStr;
-        monthStr = selectedMonthDate.toString().substring(24, 28);
+        System.out.println(selectedMonthDate.toString());
+        monthStr = selectedMonthDate.toString().substring(selectedMonthDate.toString().length()-4, selectedMonthDate.toString().length());
         monthStr = monthStr + " " + selectedMonthDate.toString().substring(4, 7);
         selectedMonthText.setText(monthStr);
         //填list
@@ -110,13 +120,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         for (i=bills.size()-1; i>=0; --i)
         {
             String tempDateStr = bills.get(i).getDate().toString();
-            if (monthStr.substring(0, 4).equals(tempDateStr.substring(24, 28)) &&
+            if (monthStr.substring(0, 4).equals(tempDateStr.substring(tempDateStr.length()-4, tempDateStr.length())) &&
                     monthStr.substring(5, 8).equals(tempDateStr.substring(4, 7)))
             {
                 str = "Day" + bills.get(i).getDate().toString().substring(8, 16);
                 str = "    " + str + "                                                 ";
                 NumberFormat format = new DecimalFormat("0.00");
-                str =
+                if (bills.get(i).getMoney() >= 1.)
+                    str = str + "+";
                 str = str + format.format(bills.get(i).getMoney()) + "元";
                 listData.add(str);
                 listIndexMap[listData.size()-1] = i;

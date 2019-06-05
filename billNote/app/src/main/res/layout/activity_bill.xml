@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billActivity"
-        android:layout_width="420dp"
+        android:layout_width="425dp"
         android:layout_height="80dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -15,22 +15,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bt_billReturn"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="返回"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/arrow_round_back"
         app:layout_constraintStart_toStartOf="@+id/tb_billActivity"
         app:layout_constraintTop_toTopOf="@+id/tb_billActivity" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billBack1"
         android:layout_width="420dp"
-        android:layout_height="115dp"
+        android:layout_height="82dp"
         android:layout_marginTop="78dp"
-        android:background="@android:color/holo_orange_light"
+        android:background="@color/snow"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +42,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billBack2"
         android:layout_width="420dp"
-        android:layout_height="100dp"
-        android:background="@android:color/holo_blue_bright"
+        android:layout_height="70dp"
+        android:background="@color/floralwhite"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,70 +51,76 @@
 
     <TextView
         android:id="@+id/lb_billDate"
-        android:layout_width="93dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="16dp"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:text="日期"
         app:layout_constraintStart_toStartOf="@+id/tb_billBack1"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack1" />
 
     <TextView
         android:id="@+id/lb_billTime"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="138dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="172dp"
         android:text="时间"
         app:layout_constraintEnd_toEndOf="@+id/tb_billBack1"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack1" />
 
     <Button
         android:id="@+id/bt_billDate"
-        android:layout_width="144dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/ivory"
         android:text="Button"
         app:layout_constraintStart_toStartOf="@+id/tb_billBack1"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack1" />
 
     <Button
         android:id="@+id/bt_billTime"
-        android:layout_width="144dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="57dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/ivory"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/tb_billBack1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bt_billEdit"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:text="编辑"
-        app:layout_constraintEnd_toEndOf="@+id/tb_billActivity"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="22dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tb_billActivity" />
 
     <TextView
         android:id="@+id/lb_billMoneyBefore"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="40dp"
-        android:text="金额："
-        app:layout_constraintStart_toEndOf="@+id/tb_billBack2"
-        app:layout_constraintStart_toStartOf="@+id/tb_billBack2"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="24dp"
+        android:text="金额"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack2" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billBack3"
         android:layout_width="420dp"
         android:layout_height="70dp"
-        android:background="@android:color/holo_purple"
+        android:background="@color/snow"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,8 +130,8 @@
         android:id="@+id/et_billMoney"
         android:layout_width="78dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="176dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="172dp"
         android:ems="10"
         android:inputType="number|text"
         android:text="0"
@@ -131,9 +140,10 @@
 
     <TextView
         android:id="@+id/lb_billMoneyAfter"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="152dp"
         android:text="元"
         app:layout_constraintEnd_toEndOf="@+id/tb_billBack2"
@@ -141,19 +151,20 @@
 
     <TextView
         android:id="@+id/lb_billEventBefore"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
         android:text="项目"
         app:layout_constraintStart_toStartOf="@+id/tb_billBack3"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack3" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/tb_billBack4"
         android:layout_width="420dp"
-        android:layout_height="91dp"
-        android:background="@android:color/holo_green_light"
+        android:layout_height="70dp"
+        android:background="@color/floralwhite"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,54 +172,69 @@
 
     <TextView
         android:id="@+id/lb_billLocationBefore"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
         android:text="位置"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        app:layout_constraintStart_toStartOf="@+id/tb_billBack4"
+        app:layout_constraintTop_toTopOf="@+id/tb_billBack4" />
 
     <EditText
         android:id="@+id/et_billLocation"
-        android:layout_width="244dp"
+        android:layout_width="320dp"
         android:layout_height="46dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="113dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        app:layout_constraintStart_toStartOf="@+id/tb_billBack4"
+        app:layout_constraintTop_toTopOf="@+id/tb_billBack4" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bt_locateHere"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="当前位置"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/tb_billBack3" />
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tb_billBack4" />
 
     <EditText
         android:id="@+id/et_billEvent"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/tb_billBack3"
         app:layout_constraintTop_toTopOf="@+id/tb_billBack3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bt_billDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="16dp"
-        android:text="删除"
-        app:layout_constraintStart_toStartOf="@+id/tb_billActivity"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/trash"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tb_billActivity" />
+
+    <ImageView
+        android:id="@+id/bt_billPic"
+        android:layout_width="412dp"
+        android:layout_height="366dp"
+        android:background="@color/snow"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_billBack4" />
 
 </android.support.constraint.ConstraintLayout>

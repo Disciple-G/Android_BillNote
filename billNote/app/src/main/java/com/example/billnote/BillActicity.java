@@ -7,14 +7,21 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -25,17 +32,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/*
+ *  UI
+ *      返回、删除
+ */
+
 public class BillActicity extends Activity {
     private SingleBill modifiedBill;
     private boolean isEditing;
 
-    private  Button button_billEdit;
-    private  Button button_locateHere;
+    private ImageButton button_billEdit;
+    private ImageButton button_locateHere;
     private Button button_billDate;
     private Button button_billDTime;
     private EditText editText_billMoney;
     private EditText editText_billEvent;
     private EditText editText_billLocation;
+    private ImageView button_billPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,7 @@ public class BillActicity extends Activity {
         modifiedBill = (SingleBill) intent_got.getSerializableExtra("bill");
         isEditing = (boolean) intent_got.getBooleanExtra("isEditing", false);
         //设置顶端按钮
-        Button button_billReturn = (Button) findViewById(R.id.bt_billReturn);
+        ImageButton button_billReturn = (ImageButton) findViewById(R.id.bt_billReturn);
         button_billReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +70,7 @@ public class BillActicity extends Activity {
                 finish();
             }
         });
-        button_billEdit = (Button) findViewById(R.id.bt_billEdit);
+        button_billEdit = (ImageButton) findViewById(R.id.bt_billEdit);
         button_billEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +78,7 @@ public class BillActicity extends Activity {
                 setUIByEdit();
             }
         });
-        Button button_billDelete = (Button) findViewById(R.id.bt_billDelete);
+        ImageButton button_billDelete = (ImageButton) findViewById(R.id.bt_billDelete);
         button_billDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,15 +109,25 @@ public class BillActicity extends Activity {
         editText_billEvent = (EditText) findViewById(R.id.et_billEvent);
         editText_billLocation = (EditText) findViewById(R.id.et_billLocation);
         //设置获取位置按钮
-        button_locateHere = (Button) findViewById(R.id.bt_locateHere);
+        button_locateHere = (ImageButton) findViewById(R.id.bt_locateHere);
         button_locateHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText_billLocation.setText(getAutoLocationStr());
             }
         });
-        //System.out.println(getAutoLocationStr());
-        System.out.println(modifiedBill.getDate().toString());
+        //添加一张图片
+        button_billPic = (ImageView) findViewById(R.id.bt_billPic);
+        button_billPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //先跳转到系统相册
+                Intent intent_billPic = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent_billPic, 1);
+            }
+        });
 
         fillWithData();
         setUIByEdit();
@@ -153,7 +176,7 @@ public class BillActicity extends Activity {
         String str;
         String dateStr = modifiedBill.getDate().toString();
         str = dateStr.substring(4, 7) + " " + dateStr.substring(8, 10)
-                + " " + dateStr.substring(24, 28);
+                + " " + dateStr.substring(dateStr.length()-4, dateStr.length());
         button_billDate.setText(str);
         str = dateStr.substring(11, 16);
         button_billDTime.setText(str);
@@ -164,19 +187,27 @@ public class BillActicity extends Activity {
         editText_billEvent.setText(modifiedBill.getEvent());
         editText_billLocation.setText(modifiedBill.getLocation());
         //还差图片
+        if (modifiedBill.picNameList.isEmpty())
+        {
+            button_billPic.setImageResource(R.drawable.add_32x32);
+        }
+        else
+        {
+
+        }
     }
 
     private void setUIByEdit()
     {
         if (isEditing)
         {
-            button_billEdit.setText("完成");
+            button_billEdit.setImageResource(R.drawable.correct);
             button_locateHere.setVisibility(View.VISIBLE);
 
         }
         else
         {
-            button_billEdit.setText("编辑");
+            button_billEdit.setImageResource(R.drawable.edit);
             button_locateHere.setVisibility(View.GONE);
         }
         button_billDate.setEnabled(isEditing);
@@ -184,7 +215,7 @@ public class BillActicity extends Activity {
         editText_billMoney.setEnabled(isEditing);
         editText_billEvent.setEnabled(isEditing);
         editText_billLocation.setEnabled(isEditing);
-        //还差图片
+        button_billPic.setEnabled(isEditing);
     }
 
     private void getDataFromUI()
@@ -207,7 +238,7 @@ public class BillActicity extends Activity {
                 modifiedBill.setDate(date);
                 String dateStr = date.toString();
                 String str = dateStr.substring(4, 7) + " " + dateStr.substring(8, 10)
-                        + " " + dateStr.substring(24, 28);
+                        + " " + dateStr.substring(dateStr.length()-4, dateStr.length());
                 button.setText(str);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -232,6 +263,29 @@ public class BillActicity extends Activity {
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
         TPD.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
+            try {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String path = cursor.getString(columnIndex);
+                cursor.close();
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                button_billPic.setImageBitmap(bitmap);
+            } catch ( Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
 }
