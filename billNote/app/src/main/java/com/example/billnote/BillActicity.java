@@ -24,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static java.lang.Math.abs;
 
 /*
  *  UI
@@ -48,6 +51,7 @@ public class BillActicity extends Activity {
     private ImageButton button_locateHere;
     private Button button_billDate;
     private Button button_billDTime;
+    private TextView textView_inOrOut;
     private EditText editText_billMoney;
     private EditText editText_billEvent;
     private EditText editText_billLocation;
@@ -108,6 +112,16 @@ public class BillActicity extends Activity {
             }
         });
         //初始化else
+        textView_inOrOut = (TextView) findViewById(R.id.lb_billMoneyBefore);
+        textView_inOrOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView_inOrOut.getText() == "收入")
+                    textView_inOrOut.setText("支出");
+                else
+                    textView_inOrOut.setText("收入");
+            }
+        });
         editText_billMoney = (EditText) findViewById(R.id.et_billMoney);
         editText_billEvent = (EditText) findViewById(R.id.et_billEvent);
         editText_billLocation = (EditText) findViewById(R.id.et_billLocation);
@@ -199,8 +213,12 @@ public class BillActicity extends Activity {
         str = dateStr.substring(11, 16);
         button_billDTime.setText(str);
         //Money
+        if (modifiedBill.getMoney() < 1.)
+            textView_inOrOut.setText("支出");
+        else
+            textView_inOrOut.setText("收入");
         NumberFormat format = new DecimalFormat("0.00");
-        str = format.format(modifiedBill.getMoney());
+        str = format.format(abs(modifiedBill.getMoney()));
         editText_billMoney.setText(str);
         editText_billEvent.setText(modifiedBill.getEvent());
         editText_billLocation.setText(modifiedBill.getLocation());
@@ -238,7 +256,10 @@ public class BillActicity extends Activity {
 
     private void getDataFromUI()
     {
-        modifiedBill.setMoney(Float.parseFloat(editText_billMoney.getText().toString()));
+        float money = Float.parseFloat(editText_billMoney.getText().toString());
+        if (textView_inOrOut.getText() == "支出")
+            money *= -1;
+        modifiedBill.setMoney(money);
         modifiedBill.setEvent(editText_billEvent.getText().toString());
         modifiedBill.setLocation(editText_billLocation.getText().toString());
     }
