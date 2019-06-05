@@ -10,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -31,6 +33,7 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /*
  *  UI
@@ -113,7 +116,9 @@ public class BillActicity extends Activity {
         button_locateHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText_billLocation.setText(getAutoLocationStr());
+                String str = getAutoLocationStr();
+                if (str != null)
+                    editText_billLocation.setText(str);
             }
         });
         //添加一张图片
@@ -165,9 +170,22 @@ public class BillActicity extends Activity {
                 return null;
             }
             location = locationManager.getLastKnownLocation(provider);
-            return location.toString();
+            //location转地名
+            List<Address> result = null;
+            try {
+                if (location != null)
+                {
+                    Geocoder gc = new Geocoder(this, Locale.getDefault());
+                    result = gc.getFromLocation(location.getLatitude(),
+                            location.getLongitude(), 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (result != null)
+                return result.get(0).getAddressLine(0).toString();
         }
-        return "here";
+        return null;
     }
 
     private void fillWithData()

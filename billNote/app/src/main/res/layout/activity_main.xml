@@ -9,7 +9,7 @@
     <ListView
         android:id="@+id/lv_billList"
         android:layout_width="420dp"
-        android:layout_height="648dp"
+        android:layout_height="730dp"
         app:layout_constraintTop_toBottomOf="@+id/tb_mainActivity" />
 
     <android.support.v7.widget.Toolbar

@@ -31,13 +31,12 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billBack1"
         android:layout_width="420dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="78dp"
+        android:layout_height="80dp"
         android:background="@color/snow"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tb_billActivity" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_billBack2"
@@ -229,11 +228,11 @@
 
     <ImageView
         android:id="@+id/bt_billPic"
-        android:layout_width="412dp"
-        android:layout_height="366dp"
+        android:layout_width="420dp"
+        android:layout_height="420dp"
+        android:layout_marginTop="20dp"
         android:background="@color/snow"
         android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb_billBack4" />
 
