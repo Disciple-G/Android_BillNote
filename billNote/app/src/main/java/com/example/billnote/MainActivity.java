@@ -10,25 +10,15 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.ArrayList;
-
-/*
- *  图标
- *      报表
- *      左右箭头
- *      加号
- */
-
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private LinkedList<SingleBill> bills;//全部bill的列表
@@ -101,13 +91,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET},1);
         }
-
-        //
+        //留了一个用来显示统计的按钮
         ImageButton button_showReport = (ImageButton) findViewById(R.id.bt_showReport);
         button_showReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("有请teammate完成接下来的工作");
+                //切换activity通过intent实现，intent可以携带参数bills
+                //showBillActivity的写法还可以获取返回值，仅供参考，统计部分似乎没必要
             }
         });
     }

@@ -27,26 +27,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import java.io.Serializable;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import static java.lang.Math.abs;
 
-/*
- *  UI
- *      返回、删除
- */
 
 public class BillActicity extends Activity {
     private SingleBill modifiedBill;
     private boolean isEditing;
-
     private ImageButton button_billEdit;
     private ImageButton button_locateHere;
     private Button button_billDate;
@@ -223,13 +216,21 @@ public class BillActicity extends Activity {
         editText_billEvent.setText(modifiedBill.getEvent());
         editText_billLocation.setText(modifiedBill.getLocation());
         //还差图片
-        if (modifiedBill.picNameList.isEmpty())
+        String picPath = modifiedBill.getPicPath();
+        if (picPath == null)
         {
             button_billPic.setImageResource(R.drawable.add_32x32);
         }
         else
         {
-
+            File f = new File(picPath);
+            if (f.exists())
+            {
+                Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+                button_billPic.setImageBitmap(bitmap);
+            }
+            else
+                button_billPic.setImageResource(R.drawable.add_32x32);
         }
     }
 
@@ -239,7 +240,6 @@ public class BillActicity extends Activity {
         {
             button_billEdit.setImageResource(R.drawable.correct);
             button_locateHere.setVisibility(View.VISIBLE);
-
         }
         else
         {
@@ -320,6 +320,7 @@ public class BillActicity extends Activity {
                 String path = cursor.getString(columnIndex);
                 cursor.close();
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
+                modifiedBill.setPicPath(path);
                 button_billPic.setImageBitmap(bitmap);
             } catch ( Exception e){
                 e.printStackTrace();

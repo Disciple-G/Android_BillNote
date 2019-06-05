@@ -10,14 +10,14 @@ public class SingleBill implements Serializable {
     private String locationStr;
     private float money;
     private String event;
-    public LinkedList<String> picNameList;
+    private String picPath;
 
     public SingleBill() {
         date = new Date();
         locationStr = "";
         money = 0;
         event = "";
-        picNameList = new LinkedList<String>();
+        picPath = null;
     }
 
     public Date getDate() {
@@ -36,5 +36,8 @@ public class SingleBill implements Serializable {
     public void setMoney(float newMoney) { money = newMoney; }
 
     public String getEvent() { return event; }
-    public void setEvent(String newEvent) {event = newEvent; }
+    public void setEvent(String newEvent) { event = newEvent; }
+
+    public String getPicPath() { return picPath; }
+    public void setPicPath(String newPath) { picPath = newPath; }
 }
